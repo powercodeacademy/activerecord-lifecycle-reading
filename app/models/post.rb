@@ -1,7 +1,11 @@
 class Post < ApplicationRecord
 
-  belongs_to :author
+  belongs_to :author, optional: true
   validate :is_title_case
+
+  before_validation :make_title_case
+
+  before_save :email_author_about_post
 
   private
 
@@ -14,4 +18,8 @@ class Post < ApplicationRecord
   def make_title_case
     self.title = self.title.titlecase
   end
+
+  def email_author_about_post
+  end
+
 end
