@@ -2,7 +2,8 @@ require 'rails_helper'
 
 describe 'navigate' do
   before do
-    @post = Post.create(title: "My Post", description: "My post desc")
+    @author = Author.create(name: "Test Author", genre: "Fiction", bio: "Test bio")
+    @post = Post.create(title: "My Post", description: "My post desc", author: @author)
   end
 
   it 'shows the title on the show page in a h1 tag' do
@@ -24,7 +25,8 @@ end
 describe 'form' do
 
   it 'shows an update form that submits content and redirects and prints out params' do
-    @post = Post.create(title: "My Post", description: "My post desc")
+    @author = Author.create(name: "Test Author", genre: "Fiction", bio: "Test bio")
+    @post = Post.create(title: "My Post", description: "My post desc", author: @author)
 
     visit edit_post_path(@post)
 
@@ -39,7 +41,8 @@ end
 
 describe "post" do
   it "has a post_status field" do
-    @post = Post.create(title: "My Post", description: "My post desc", post_status: true)
+    @author = Author.create(name: "Test Author", genre: "Fiction", bio: "Test bio")
+    @post = Post.create(title: "My Post", description: "My post desc", post_status: true, author: @author)
     expect(@post.post_status).to eq(true)
   end
 end
