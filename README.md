@@ -1,3 +1,5 @@
+# ActiveRecord Lifecycle
+
 ## Objectives
 
 1. Understand the concept of AR Lifecycle methods
@@ -13,16 +15,16 @@ even deleted.  Everything we cover here is called an "Active Record Lifecycle
 Callback". Many people just call them callbacks. It's a bit shorter.
 
 Take a look at the blog app that is included. Be sure to run the migrations
-before you start learning from Rails (we do this with `rake db:migrate`)! We
-have a `Post` model and a few views.  The `Post` `belongs_to` an `Author`.
+before you start learning from Rails (use `bin/rails db:migrate` for Rails 7.1+). We
+have a `Post` model and a few views. The `Post` `belongs_to` an `Author`.
 
 Note also that in the `Post` model you'll notice a **validation** to make sure
 that post titles are in title case. Title case means every word starts with a
 capital letter.
 
-So, in order to make sure that our validation always passes, before every save,
-we want Rails to run our title-case algorithm on the `title` of the `Post`.
-Let's create the `make_title_case` method then.
+To ensure our validation always passes, before every save,
+Rails should run our title-case algorithm on the `title` of the `Post`.
+Let's create the `make_title_case` method:
 
 ```ruby
 # post.rb
@@ -32,16 +34,14 @@ def make_title_case
 end
 ```
 
-To make sure that all of our `Post`s have the correctly-formatted title, we're
 going to run `make_title_case` during the first of the available lifecycle
-"points:" `before_save`.  Our validation and lifecycle callback will make sure
-our posts are always title-cased.
 
-We write lifecycle callbacks similarly to how you use `has_many` or `validates`
-and place this "hook" onto saving at the top of our model file. Since lifecycle
-methods run "as if by magic," we won't see them being called explicitly in one
-method by another method versus Rails running it for us, we put such statements
-at the top so that it catches other programmers' eyes.
+To ensure all `Post`s have a correctly formatted title, we'll run `make_title_case` during the first available lifecycle
+"point": `before_save`. Our validation and lifecycle callback will ensure
+posts are always title-cased.
+
+Lifecycle callbacks are written similarly to `has_many` or `validates` and placed at the top of the model file. Since lifecycle
+methods run automatically, we won't see them called explicitly; Rails runs them for us. Placing such statements at the top makes them easy to spot for other developers.
 
 ```ruby
 class Post < ActiveRecord::Base
@@ -132,7 +132,6 @@ This is a perfect `before_save` action. It doesn't modify the model so there is
 no validation weirdness, and we don't want to email the user if the Post is
 invalid. That would be just mean! So if you had some method called
 `email_author_about_post` you would modify your `Post` model to look like this:
-
 
 ```ruby
 class Post < ActiveRecord::Base

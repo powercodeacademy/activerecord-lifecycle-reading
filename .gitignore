@@ -39,6 +39,17 @@ jspm_packages
 /db/*.sqlite3*
 /db/*.sqlite3-journal
 
+# Rails 7.1 recommended ignores
+/log/
+/tmp/
+/vendor/bundle
+/public/assets
+/storage
+/coverage/
+/node_modules/
+/yarn-error.log
+/byebug_history
+
 # Rails sensitive and unnecessary files
 log/
 tmp/
